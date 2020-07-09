@@ -1,0 +1,55 @@
+<html>
+
+<head>
+
+<meta charset="utf-8"> 
+
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+</style>
+
+<script>
+
+function funa() {
+
+	var fa = parseFloat(document.getElementById("inp_a").value) || 0;
+	var fb = parseFloat(document.getElementById("inp_b").value)/60 || 0;
+	var fc = parseFloat(document.getElementById("inp_c").value) || 0;
+	var fd = parseFloat(document.getElementById("inp_d").value) || 0;
+	
+	var fr = (fa+fb+fc+fb)*fd-fb;
+	document.getElementById("fr").innerText = fr;
+}
+
+</script>
+
+</head>
+
+<body>
+
+<label>Tempo de Rotação Horária</label>
+<input id="inp_a" type="number" onkeyup="funa()" value="" autocomplete="off">
+<br>
+<label>Tempo de Rotação Horária</label>
+<input id="inp_b" type="number" onkeyup="funa()" value="" autocomplete="off">
+<br>
+<label>Tempo de Rotação Horária</label>
+<input id="inp_c" type="number" onkeyup="funa()" value="" autocomplete="off">
+<br>
+<label>Tempo de Rotação Horária</label>
+<input id="inp_d" type="number" onkeyup="funa()" value="" autocomplete="off">
+<br>
+<label id="fr"></label>
+
+</body>
+
+</html>
