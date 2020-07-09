@@ -27,7 +27,9 @@ function funa() {
 	var fd = parseFloat(document.getElementById("inp_d").value) || 0;
 	
 	var fr = (fa+fb+fc+fb)*fd-fb;
+	if (fa!==0 && fb!==0 && fc!==0 && fd!==0){
 	document.getElementById("fr").innerText = fr;
+}
 }
 
 </script>
@@ -36,19 +38,22 @@ function funa() {
 
 <body>
 
-<label>Tempo de Rotação Horária</label>
+<label>Tempo de Rotação Horária (em minutos):</label>
 <input id="inp_a" type="number" onkeyup="funa()" value="" autocomplete="off">
 <br>
-<label>Tempo de Rotação Horária</label>
+<label>Tempo de Repouso (em segundos):</label>
 <input id="inp_b" type="number" onkeyup="funa()" value="" autocomplete="off">
 <br>
-<label>Tempo de Rotação Horária</label>
+<label>Tempo de Rotação Anti-horária (em minutos):</label>
 <input id="inp_c" type="number" onkeyup="funa()" value="" autocomplete="off">
 <br>
-<label>Tempo de Rotação Horária</label>
+<label>Repetições</label>
 <input id="inp_d" type="number" onkeyup="funa()" value="" autocomplete="off">
+<label>(repetição = rotação horária + rotação anti-horária)</label>
 <br>
+<label>Tempo de Trabalho:</label>
 <label id="fr"></label>
+<label>(minutos)</label>
 
 </body>
 
