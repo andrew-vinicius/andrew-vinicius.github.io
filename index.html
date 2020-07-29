@@ -38,6 +38,8 @@ function calculation_time() {
 }
 }
 
+
+
 function calculation_ink() {
 
 	var is = parseFloat(document.getElementById("input_solvent").value) || 0;
@@ -46,27 +48,27 @@ function calculation_ink() {
 	var ica = parseFloat(document.getElementById("input_percentage_conductive_additive").value) || 0;
 	
 	var result_solute = ((1-(ip/100))*is)/(ip/100);
-	if (is!==0 && ip!==0 && iac!==0 && ica!==0){
+	if (is!==0 && ip!==0 && iac!==0){
 	document.getElementById("result_solute").innerText = result_solute.toFixed(4) + " g";
 }	
 	var result_percentage_binder = 100-iac-ica;
-	if (is!==0 && ip!==0 && iac!==0 && ica!==0){
+	if (is!==0 && ip!==0 && iac!==0){
 	document.getElementById("result_percentage_binder").innerText = result_percentage_binder.toFixed(2) + " %";
 }
 	var result_activated_carbon = (result_solute*iac)/100;
-	if (is!==0 && ip!==0 && iac!==0 && ica!==0){
+	if (is!==0 && ip!==0 && iac!==0){
 	document.getElementById("result_activated_carbon").innerText = result_activated_carbon.toFixed(4) + " g";
 }
 	var result_conductive_additive = (result_solute*ica)/100;
-	if (is!==0 && ip!==0 && iac!==0 && ica!==0){
+	if (is!==0 && ip!==0 && iac!==0){
 	document.getElementById("result_conductive_additive").innerText = result_conductive_additive.toFixed(4) + " g";
 }
 	var result_ac_plus_ca = result_activated_carbon+result_conductive_additive;
-	if (is!==0 && ip!==0 && iac!==0 && ica!==0){
+	if (is!==0 && ip!==0 && iac!==0){
 	document.getElementById("result_ac_plus_ca").innerText = result_ac_plus_ca.toFixed(4) + " g";
 }
 	var result_binder = (result_solute*result_percentage_binder)/100;
-	if (is!==0 && ip!==0 && iac!==0 && ica!==0){
+	if (is!==0 && ip!==0 && iac!==0){
 	document.getElementById("result_binder").innerText = result_binder.toFixed(4) + " g";
 }
 
@@ -83,12 +85,12 @@ function calculation_ink() {
 <label class="font-weight-bold col-5" style="color:green">Cálculo autómatico de proporções de tintas:</label><br>
 
 <label class="col-2" style="text-align:left">Solvente (ml):</label>
-<input class="col-1" id="input_solvent" type="number" min="0" placeholder="10.00" step="0.0001" onkeyup="calculation_ink()" value="" autocomplete="off">
+<input class="col-1" id="input_solvent" type="number" min="0.0001" placeholder="10.00" step="0.0001" onkeyup="calculation_ink()" value="" autocomplete="off">
 <label class="col-2" style="text-align:left">AC (%):</label>
 <input class="col-1" id="input_percentage_activated_carbon" type="number" min="0" max="100" placeholder="90.00%" step="0.0001" onkeyup="calculation_ink()" value="" autocomplete="off">
 <br>
 <label class="col-2" style="text-align:left">Solvente (%):</label>
-<input class="col-1" id="input_percentage" type="number" min="0" max="100" placeholder="80.00%" step="0.0001" onkeyup="calculation_ink()" value="" autocomplete="off">
+<input class="col-1" id="input_percentage" type="number" min="1" max="100" placeholder="80.00%" step="0.0001" onkeyup="calculation_ink()" value="" autocomplete="off">
 <label class="col-2" style="text-align:left">Aditivo (%):</label>
 <input class="col-1" id="input_percentage_conductive_additive" type="number" min="0" max="100" placeholder="5.00%" step="0.0001"onkeyup="calculation_ink()" value="" autocomplete="off">
 <br>
