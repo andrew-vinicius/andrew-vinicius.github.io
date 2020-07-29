@@ -15,24 +15,63 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
+
+h6 { font-family: Calibri; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; line-height: 28px; } 
+label { font-family: Calibri; font-size: 14px; font-style: normal; font-variant: normal; font-weight: normal; line-height: 28px; } 
+
 </style>
 
-<title>Moinho</title>
+<title>Carbon Sci-Tech Labs</title>
 
 <script>
 
-function funa() {
+function calculation_time() {
 
-	var fa = parseFloat(document.getElementById("inp_a").value) || 0;
-	var fb = parseFloat(document.getElementById("inp_b").value)/60 || 0;
-	var fc = parseFloat(document.getElementById("inp_c").value) || 0;
-	var fd = parseFloat(document.getElementById("inp_d").value) || 0;
+	var icw = parseFloat(document.getElementById("input_clockwise").value) || 0;
+	var iccw = parseFloat(document.getElementById("input_counterclockwise").value) || 0;
+	var irt = parseFloat(document.getElementById("input_rest_time").value)/60 || 0;
+	var irp = parseFloat(document.getElementById("input_repetition").value) || 0;
 	
-	var fr = (fa+fb+fc+fb)*fd-fb;
-	if (fa!==0 && fb!==0 && fc!==0 && fd!==0){
-	document.getElementById("fr").innerText = fr.toFixed(1) + " (minutos)";
+	var result_time = (icw+iccw+2*irt)*irp-irt;
+	if (icw!==0 && iccw!==0 && irt!==0 && irp!==0){
+	document.getElementById("result_time").innerText = result_time.toFixed(1) + " (minutos)";
 }
 }
+
+function calculation_ink() {
+
+	var is = parseFloat(document.getElementById("input_solvent").value) || 0;
+	var ip = parseFloat(document.getElementById("input_percentage").value) || 0;
+	var iac = parseFloat(document.getElementById("input_percentage_activated_carbon").value) || 0;
+	var ica = parseFloat(document.getElementById("input_percentage_conductive_additive").value) || 0;
+	
+	var result_solute = ((1-(ip/100))*is)/(ip/100);
+	if (is!==0 && ip!==0 && iac!==0 && ica!==0){
+	document.getElementById("result_solute").innerText = result_solute.toFixed(4) + " g";
+}	
+	var result_percentage_binder = 100-iac-ica;
+	if (is!==0 && ip!==0 && iac!==0 && ica!==0){
+	document.getElementById("result_percentage_binder").innerText = result_percentage_binder.toFixed(2) + " %";
+}
+	var result_activated_carbon = (result_solute*iac)/100;
+	if (is!==0 && ip!==0 && iac!==0 && ica!==0){
+	document.getElementById("result_activated_carbon").innerText = result_activated_carbon.toFixed(4) + " g";
+}
+	var result_conductive_additive = (result_solute*ica)/100;
+	if (is!==0 && ip!==0 && iac!==0 && ica!==0){
+	document.getElementById("result_conductive_additive").innerText = result_conductive_additive.toFixed(4) + " g";
+}
+	var result_ac_plus_ca = result_activated_carbon+result_conductive_additive;
+	if (is!==0 && ip!==0 && iac!==0 && ica!==0){
+	document.getElementById("result_ac_plus_ca").innerText = result_ac_plus_ca.toFixed(4) + " g";
+}
+	var result_binder = (result_solute*result_percentage_binder)/100;
+	if (is!==0 && ip!==0 && iac!==0 && ica!==0){
+	document.getElementById("result_binder").innerText = result_binder.toFixed(4) + " g";
+}
+
+}
+
 
 </script>
 
@@ -40,46 +79,86 @@ function funa() {
 
 <body>
 
-<h6 class="font-weight-bold col-3">Insira os tempos:</h6>
+
+<label class="font-weight-bold col-5" style="color:green">Cálculo autómatico de proporções de tintas:</label><br>
+
+<label class="col-2" style="text-align:left">Solvente (ml):</label>
+<input class="col-1" id="input_solvent" type="number" onkeyup="calculation_ink()" value="" autocomplete="off">
+<label class="col-2" style="text-align:left">AC (%):</label>
+<input class="col-1" id="input_percentage_activated_carbon" type="number" onkeyup="calculation_ink()" value="" autocomplete="off">
+<br>
+<label class="col-2" style="text-align:left">Solvente (%):</label>
+<input class="col-1" id="input_percentage" type="number" onkeyup="calculation_ink()" value="" autocomplete="off">
+<label class="col-2" style="text-align:left">Aditivo (%):</label>
+<input class="col-1" id="input_percentage_conductive_additive" type="number" onkeyup="calculation_ink()" value="" autocomplete="off">
+<br>
+<label class="col-2" style="text-align:left">Soluto:</label>
+<label class="col-1" id="result_solute"></label>
+<label class="col-2" style="text-align:left">Aglutinador:</label>
+<label class="col-1" id="result_percentage_binder"></label>
+<br>
+<label class="col-2" style="text-align:left">AC:</label>
+<label class="col-1" id="result_activated_carbon"></label>
+<label class="col-2" style="text-align:left">AC+Aditivo:</label>
+<label class="col-1" id="result_ac_plus_ca"></label>
+<br>
+<label class="col-2" style="text-align:left">Aditivo:</label>
+<label class="col-1" id="result_conductive_additive"></label>
+<label class="col-2" style="text-align:left">Aglutinador:</label>
+<label class="col-1" id="result_binder"></label>
+<br><br><br>
+
+
+<label class="font-weight-bold col-5" style="color:blue">Procedimentos para uso do moinho planetário:</label><br>
+<pre calss="small">
+   1.  Abra a tampa, insira os potes com as amostras e trave-os, certifique-se de retirar os objetos do interior e feche a tampa;
+       1.1 Lembres-e de usar em pares, ou seja, 2 ou 4 potes, mesmo que utilize só um pote, o outro terá que ter a mesma massa com água.
+   2.  Ligue o cabo de energia na tomada (220 V), ligue o disjuntor na parte traseira e destrave o botão de vermelho de emergência;
+   3.  Botões:
+           "mode"    - alterna entre as funções do controlador e a velocidade;
+           "enter"   - pode entrar em uma função e confirmar seu ajuste;
+           "»"       - passa para o próximo dígito de uma função;
+           "↑" e "↓" - alterar o número da função exibida ou o valor dela.
+   4.  Parametrização das funções:
+           4.1.  u.3.0.04: Tempo de rotação horária em minutos;
+           4.2.  u.3.0.06: Tempo de rotação anti-horária em minutos;
+           4.3.  u.3.0.35: H.010 (sentido horário);
+           4.4.  u.3.0.36: H.110 (sentido anti-horário);
+           4.5.  u.3.2.11:  4239 (controle de tempo) ou 4200 (sem controle de tempo);
+           4.6.  u.3.2.17: Tempo em segundos de repouso entre rotação horária e anti-horária;
+   5.  Aperte "mode" para sair e ajuste a velocidade (em RPM) com o potenciômetro (vel. máx.: 670 RPM);
+   6.  Prescionar o botão redondo verde "Run Start";
+   7.  Quando acabar, zerar a velocidade com o uso do potenciômetro, ativar o botão de emergência, desliguar o disjuntor e desliguar o cabo de energia da tomada;
+   8.  Abra a tampa e retire os pote(s) com a(s) amostra(s).
+</pre><br>
+
+
+<label class="font-weight-bold col-5" style="color:black">Cálculo automático da função u.3.2.24 (insira os valores): </label>
+<label class="font-weight-bold" style="color:green" id="result_time"></label><br>
+
 <label class="col-3">Rotação Horária (em minutos):</label>
-<input class="col-1" id="inp_a" type="number" onkeyup="funa()" value="" autocomplete="off">
+<input class="col-1" id="input_clockwise" type="number" onkeyup="calculation_time()" value="" autocomplete="off">
 <label>u.3.0.04</label>
 <br>
-<label class="col-3">Repouso (em segundos):</label>
-<input class="col-1" id="inp_b" type="number" onkeyup="funa()" value="" autocomplete="off">
-<label>u.3.2.17</label>
-<br>
 <label class="col-3">Rotação Anti-horária (em minutos):</label>
-<input class="col-1" id="inp_c" type="number" onkeyup="funa()" value="" autocomplete="off">
+<input class="col-1" id="input_counterclockwise" type="number" onkeyup="calculation_time()" value="" autocomplete="off">
 <label>u.3.0.06</label>
 <br>
-<label class="col-3">Repetições:</label>
-<input class="col-1" id="inp_d" type="number" onkeyup="funa()" value="" autocomplete="off">
-<label>(repetição = rotação horária + rotação anti-horária)</label>
+<label class="col-3">Repouso (em segundos):</label>
+<input class="col-1" id="input_rest_time" type="number" onkeyup="calculation_time()" value="" autocomplete="off">
+<label>u.3.2.17</label>
 <br>
-<label class="col-3">Tempo de Trabalho (u.3.2.24):</label>
-<label id="fr"></label>
-<br><br>
-<label class="font-weight-bold col-3">Procedimentos para uso:</label><br>
-<pre class="small">
-   1.  Abra a tampa, insira os potes, certifique-se de retirar os objetos do interior e feche a tampa;
-   2.  Ligue o cabo de energia na tomada;
-   3.  Ligue o disjuntor (parte traseira);
-   4.  Destrave o botão de emergência;
-   5.  Parametrize (usando os botões: "mode", "enter", "»", "↑" e "↓"):
-           5.1.  u.3.0.35: H.010 (sentido horário);
-           5.2.  u.3.0.36: H.010 (sentido anti-horário);
-           5.3.  u.3.2.11:  4239 (controle de tempo) ou 4200 (sem controle de tempo);
-   6.  Aperte "mode" e ajuste a velocidade (em RPM) com o potenciômetro (vel. máx.: 670 RPM);
-   7.  Prescionar o botão verde (Run Start);
-   8.  Quando acabar, zerar a velocidade com o potenciômetro;
-   9.  Ative o botão de emergência;
-   10. Desligue o disjuntor;
-   11. Desligue o cabo de energia da tomada;
-   12. Abra a tampa e retire os potes.
-</pre>
+<label class="col-3">Repetições:</label>
+<input class="col-1" id="input_repetition" type="number" onkeyup="calculation_time()" value="" autocomplete="off">
+<label>(repetição = rotação horária + rotação anti-horária)</label>
+<br><br><br>
+
+<label class="font-weight-bold">Bom experimento</label><label class="font-weight-bold" style="color:red">!</label><br><br>
+
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
 
 <!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
